@@ -1,1 +1,5 @@
-export const FETCH_NEWS = "FETCH_NEWS";
+const FETCH_NEWS = "FETCH_NEWS";
+const UPDATE_NEWS = "UPDATE_NEWS";
+
+export { FETCH_NEWS, UPDATE_NEWS }
+
