@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar } from '@material-ui/core';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@material-ui/core';
 
 import './../styles/card.scss';
 
@@ -23,14 +23,28 @@ class NewsCard extends Component {
         super(props)
     }
 
+    redirectTo = (url) =>{
+        window.location.href = url;
+        return;
+    }
+
     render() {
         if (this.props.data) {
             const { source, author, title, description, url, urlToImage, publishedAt, content } = this.props.data;
+            const sourceName = source.name;
             return (
-                <Card>
-                    <CardHeader avatar={title?<Avatar>{title.slice(0,1)}</Avatar>:null} title={title?title:'No Title'} subheader={publishedAt?moment(publishedAt).format('YYYY-MM-DD h:mm'):null}>
-                        
+                <Card className='NewsCard-item' onClick={()=>this.redirectTo(url)}>
+                    <CardHeader className='NewsCard-header' avatar={sourceName?<Avatar className='NewsCard-avatar'>{sourceName.slice(0,1)}</Avatar>:null} title={sourceName?sourceName:''} subheader={publishedAt?moment(publishedAt).format('YYYY-MM-DD h:mm'):null}>
                     </CardHeader>
+                    <CardMedia className='NewsCard-image' image={urlToImage || '/images/no_image.jpg'} title={title}/>
+                    <CardContent>
+                        <Typography variant="body1" color="textPrimary" component="summary" className="NewsCard-title">
+                            {title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p" className="NewsCard-description">
+                            {description}
+                        </Typography>
+                    </CardContent>
                 </Card>
 
             )

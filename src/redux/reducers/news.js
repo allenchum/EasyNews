@@ -1,11 +1,12 @@
-import { FETCH_NEWS, UPDATE_NEWS } from '../actionTypes'
-import axios from 'axios'
+import { FETCH_NEWS, UPDATE_NEWS, SEARCH_NEWS, SHOW_LOADING } from '../actionTypes'
 
 const initialState = {
     articles: [],
     isFetching: false,
     fetchFailed: false,
     totalResults: 0,
+    showLoading: true,
+    searchInputText: '',
 }
 
 export default function (state = initialState, action) {
@@ -13,18 +14,31 @@ export default function (state = initialState, action) {
         case FETCH_NEWS: {
             return {
                 ...state,
-                isFetching: action.isFetching
+                isFetching: action.isFetching,
+                fetchFailed: action.fetchFailed,
             }
         }
-        case UPDATE_NEWS:
+        case UPDATE_NEWS: {
             var data = action.data;
-            console.log('updating news data:', data)
-            return{
+            return {
                 ...state,
                 isFetching: false,
                 articles: data.articles,
                 totalResults: data.totalResults,
                 fetchFailed: false
+            }
+        }
+        case SEARCH_NEWS: {
+            console.log('SEARCH_NEWS',action.text)
+            return {
+                ...state,
+                searchInputText: action.text
+            }
+        }
+        case SHOW_LOADING:
+            return {
+                ...state,
+                showLoading: action.show
             }
         default:
             return state

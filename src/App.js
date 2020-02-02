@@ -11,8 +11,8 @@ import './App.scss';
 
 var sampleData = {
   "source": {
-      "id": "the-washington-post",
-      "name": "The Washington Post"
+    "id": "the-washington-post",
+    "name": "The Washington Post"
   },
   "author": "Dan Stillman",
   "title": "D.C.-area forecast: Scattered showers possible this afternoon into evening; major warming by Monday",
@@ -36,9 +36,14 @@ class App extends Component {
     this.props.fetchNews();
   }
 
+  isIncludeText = (str, text) => {
+    return str.toLowerCase().includes(text.toLowerCase());
+  }
+
 
 
   render() {
+    const { isFetching, showLoading } = this.props;
     return (
       <div className="App">
         <div className="NewsApp-wrapper">
@@ -46,7 +51,7 @@ class App extends Component {
 
           </Header>
           <div className="contents-container">
-            {this.renderCards()}
+            {showLoading ? <Loading /> : this.renderCards()}
           </div>
           <PageIndicator></PageIndicator>
         </div>
@@ -55,17 +60,19 @@ class App extends Component {
   }
 
   renderCards = () => {
-    var { articles } = this.props;
-    console.log('articles', articles)
-    if (articles) {
-       return articles.map((arc, index)=>{
-         return <NewsCard data={arc} key={`news-card-${index}`}/>
-       });
-      //return <NewsCard data={articles[0]}/>
+    let { articles, searchInputText } = this.props;
+    articles = articles.filter((arc) => {
+      return (this.isIncludeText(arc.title, searchInputText) || this.isIncludeText(arc.description, searchInputText));
+    })
 
-    }else{
+    console.log('articles', articles)
+    if (articles && Array.isArray(articles) && articles.length > 0) {
+      return articles.map((arc, index) => {
+        return <NewsCard data={arc} key={`news-card-${index}`} />
+      });
+    } else {
       console.log('no news found')
-      return <div>No news found...</div>
+      return <div>Sorry, no news found...</div>
     }
     //return <NewsCard data={sampleData}/>
   }
@@ -77,7 +84,9 @@ const mapStateToProps = ({ news }) => {
     isFetching: news.isFetching,
     articles: news.articles,
     totalResults: news.totalResults,
-    fetchFailed: news.fetchFailed
+    fetchFailed: news.fetchFailed,
+    showLoading: news.showLoading,
+    searchInputText: news.searchInputText,
   }
 }
 

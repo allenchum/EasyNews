@@ -1,0 +1,14 @@
+.NewsCard-item{
+    width: 345px;
+    height: 450px;
+    margin: 10px;
+    .NewsCard-image{
+        height: 190px;
+    }
+    .NewsCard-title{
+        margin-bottom: 5px;
+    }
+    .NewsCard-description{
+        text-overflow: ellipsis;
+    }
+}
