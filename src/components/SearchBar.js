@@ -5,19 +5,10 @@ import { searchNews } from '../redux/actions';
 import '../styles/search-bar.scss';
 
 class SearchBar extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-
-        }
-    }
-
     onSearchTextChange = (event) => {
         var text = event.target.value;
-        console.log(text);
         this.props.searchNews(text);
     }
-
     render() {
         return (
             <div className="search-bar-container">

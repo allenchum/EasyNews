@@ -9,31 +9,14 @@ import PageIndicator from './components/PageIndicator';
 
 import './App.scss';
 
-var sampleData = {
-  "source": {
-    "id": "the-washington-post",
-    "name": "The Washington Post"
-  },
-  "author": "Dan Stillman",
-  "title": "D.C.-area forecast: Scattered showers possible this afternoon into evening; major warming by Monday",
-  "description": "Tomorrow looks to be the nicer day of the weekend, followed by a spring-like Monday.",
-  "url": "https://www.washingtonpost.com/weather/2020/02/01/dc-area-forecast-scattered-showers-possible-this-afternoon-into-evening-major-warming-by-monday/",
-  "urlToImage": "https://www.washingtonpost.com/resizer/wOnQ4H7giOW_E-l-6NRx8-KzhHQ=/1484x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Q4GC2CCQLBBE3CDVAA5IVFK4LM.jpg",
-  "publishedAt": "2020-02-01T10:00:28Z",
-  "content": "Todays daily digit\r\nA somewhat subjective rating of the days weather, on a scale of 0 to 10.\r\n5/10: Not a great look for the first day of February--cloudy and cool with a chance of scattered p.m. showers.\r\nExpress forecast\r\n<ul><li>Today: Scattered afternoon … [+2169 chars]"
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-
-    }
+    this.pageSize = 10;
   }
 
   componentDidMount() {
-    this.props.fetchNews();
+    this.props.fetchNews(this.pageSize, this.props.currPage);
   }
 
   isIncludeText = (str, text) => {
@@ -43,7 +26,7 @@ class App extends Component {
 
 
   render() {
-    const { isFetching, showLoading } = this.props;
+    const { showLoading } = this.props;
     return (
       <div className="App">
         <div className="NewsApp-wrapper">
@@ -53,7 +36,7 @@ class App extends Component {
           <div className="contents-container">
             {showLoading ? <Loading /> : this.renderCards()}
           </div>
-          <PageIndicator></PageIndicator>
+          <PageIndicator pageSize={this.pageSize}></PageIndicator>
         </div>
       </div>
     )
@@ -65,7 +48,6 @@ class App extends Component {
       return (this.isIncludeText(arc.title, searchInputText) || this.isIncludeText(arc.description, searchInputText));
     })
 
-    console.log('articles', articles)
     if (articles && Array.isArray(articles) && articles.length > 0) {
       return articles.map((arc, index) => {
         return <NewsCard data={arc} key={`news-card-${index}`} />
@@ -79,7 +61,6 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ news }) => {
-  console.log(news)
   return {
     isFetching: news.isFetching,
     articles: news.articles,
@@ -87,6 +68,7 @@ const mapStateToProps = ({ news }) => {
     fetchFailed: news.fetchFailed,
     showLoading: news.showLoading,
     searchInputText: news.searchInputText,
+    currPage: news.currPage,
   }
 }
 
@@ -95,7 +77,13 @@ const mapDispatchToProps = {
 }
 
 App.propTypes = {
-
+  isFetching: PropTypes.bool,
+  articles: PropTypes.array,
+  totalResults: PropTypes.number,
+  fetchFailed: PropTypes.bool,
+  showLoading: PropTypes.bool,
+  searchInputText: PropTypes.string,
+  currPage: PropTypes.number,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

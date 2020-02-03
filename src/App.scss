@@ -1,11 +1,11 @@
 .App {
   .NewsApp-wrapper {
     .contents-container {
-      width: 80vw;
-      margin: 0 auto;
+      width: 90vw;
+      margin: 54px auto 0;
       display: flex;
       flex-flow: row wrap;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: baseline;
     }
   }

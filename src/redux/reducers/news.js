@@ -1,4 +1,4 @@
-import { FETCH_NEWS, UPDATE_NEWS, SEARCH_NEWS, SHOW_LOADING } from '../actionTypes'
+import { FETCH_NEWS, UPDATE_NEWS, SEARCH_NEWS, SHOW_LOADING, CHANGE_PAGE } from '../actionTypes'
 
 const initialState = {
     articles: [],
@@ -7,6 +7,7 @@ const initialState = {
     totalResults: 0,
     showLoading: true,
     searchInputText: '',
+    currPage: 1,
 }
 
 export default function (state = initialState, action) {
@@ -29,7 +30,6 @@ export default function (state = initialState, action) {
             }
         }
         case SEARCH_NEWS: {
-            console.log('SEARCH_NEWS',action.text)
             return {
                 ...state,
                 searchInputText: action.text
@@ -39,6 +39,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 showLoading: action.show
+            }
+
+        case CHANGE_PAGE:
+            return {
+                ...state,
+                currPage: action.pageIndex
             }
         default:
             return state
