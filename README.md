@@ -1,15 +1,15 @@
 # easy-news
-A easy news platform with ReactJS/Redux
+A easy news platform made with ReactJS/Redux.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-####To start this project, please follow these steps:
+#### To start this project, please follow these steps:
 1. Clone this repository to your local
 2. Run "npm install" in terminal withtin the directory to install requrie node packages. 
 (If npm is not installed in your computer yet please refer to [this link](https://www.npmjs.com/get-npm).)
 3. Run "npm start" in terminal, now the app should be running on [http://localhost:3030](http://localhost:3030) .
 
-##API
+## API
 News API is provided by [https://newsapi.org/](https://newsapi.org/) in this app.
 
 
