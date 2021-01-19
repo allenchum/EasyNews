@@ -13,7 +13,7 @@ class NewsCard extends Component {
 
     render() {
         if (this.props.data) {
-            const { source, author, title, description, url, urlToImage, publishedAt, content } = this.props.data;
+            const { source, title, description, url, urlToImage, publishedAt } = this.props.data;
             const sourceName = source.name;
             return (
                 <Card className='NewsCard-item' onClick={() => this.redirectTo(url)}>

@@ -7,6 +7,17 @@
       flex-flow: row wrap;
       justify-content: center;
       align-items: baseline;
+
+      .MuiCard-root{
+        .NewsCard-header{
+          .MuiCardHeader-avatar{
+            margin: 0;
+          }
+          .MuiCardHeader-content{
+            padding: 0 16px;
+          }
+        }
+      }
     }
   }
 }

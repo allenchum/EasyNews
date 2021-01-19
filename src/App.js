@@ -20,15 +20,15 @@ class App extends Component {
   }
 
   isIncludeText = (str, text) => {
-    return str.toLowerCase().includes(text.toLowerCase());
+    return str?.toLowerCase().includes(text.toLowerCase());
   }
 
 
 
   render() {
-    const { showLoading } = this.props;
+    const { showLoading, direction } = this.props;
     return (
-      <div className="App">
+      <div className="App" dir={direction}>
         <div className="NewsApp-wrapper">
           <Header>
 
@@ -60,7 +60,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ news }) => {
+const mapStateToProps = ({ news, language }) => {
   return {
     isFetching: news.isFetching,
     articles: news.articles,
@@ -69,6 +69,8 @@ const mapStateToProps = ({ news }) => {
     showLoading: news.showLoading,
     searchInputText: news.searchInputText,
     currPage: news.currPage,
+    currentLanguage: language.currentLanguage,
+    direction: language.direction
   }
 }
 
@@ -84,6 +86,8 @@ App.propTypes = {
   showLoading: PropTypes.bool,
   searchInputText: PropTypes.string,
   currPage: PropTypes.number,
+  currentLanguage: PropTypes.string,
+  direction: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

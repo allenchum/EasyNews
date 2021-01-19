@@ -1,5 +1,6 @@
-import { FETCH_NEWS, UPDATE_NEWS, SHOW_LOADING, SEARCH_NEWS, CHANGE_PAGE } from './actionTypes';
+import { FETCH_NEWS, UPDATE_NEWS, SHOW_LOADING, SEARCH_NEWS, CHANGE_PAGE, SWITCH_LANGUAGE } from './actionTypes';
 import axios from 'axios';
+import rtlDetect from 'rtl-detect';
 
 export const fetchNews = (pageSize, currPage) => {
     return (dispatch) => {
@@ -9,21 +10,31 @@ export const fetchNews = (pageSize, currPage) => {
             if (data && data.status === 'ok') {
                 dispatch(updateNews(data));
                 dispatch(showLoading(false))
-                dispatch(() => ({
+                dispatch({
                     type: FETCH_NEWS,
                     fetchFailed: false,
                     isFetching: true
-                }))
+                })
             }
         }).catch((err) => {
             console.log('%c' + err, 'color: red');
             dispatch(showLoading(false))
-            dispatch(() => ({
+            dispatch({
                 type: FETCH_NEWS,
                 fetchFailed: true,
                 isFetching: false
-            }))
+            })
         })
+    }
+}
+
+export const switchLanguage = (language) => {
+    return (dispatch) => {
+        dispatch({
+            type: SWITCH_LANGUAGE,
+            language: language,
+            direction: rtlDetect.isRtlLang(language) ? 'rtl' : 'ltr'
+        });
     }
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
+import LocaleSelector from './LocaleSelector';
 
 import '../styles/header.scss';
 
@@ -11,7 +12,10 @@ class Header extends Component {
                 <div className="header-title">
                     US News
                 </div>
-                <SearchBar></SearchBar>       
+                <div className="header-end-wrapper">
+                    <LocaleSelector/>
+                    <SearchBar/>
+                </div>
             </div>
         )
     }
